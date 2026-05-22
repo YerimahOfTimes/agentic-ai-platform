@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+
+# Streamlit
+.streamlit/
+
+# Data and indexes
+backend/data/
+backend/faiss_index/
+backend/app/memory_store.json
+backend/database/*.db
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
