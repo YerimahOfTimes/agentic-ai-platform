@@ -1,44 +1,82 @@
 from duckduckgo_search import DDGS
 
 
-def web_search(query: str, max_results: int = 5):
-    try:
-        results = []
+def clean_search_query(question: str):
+    q = question.lower().strip()
 
-        with DDGS(timeout=10) as ddgs:
-            for item in ddgs.text(query, max_results=max_results):
-                results.append({
-                    "title": item.get("title"),
-                    "href": item.get("href"),
-                    "body": item.get("body")
-                })
+    remove_words = [
+        "search for",
+        "search",
+        "web search",
+        "look up",
+        "find",
+    ]
 
-        if not results:
-            return {
-                "text": "No web results found. Please check your internet connection and try again.",
-                "sources": []
-            }
+    for word in remove_words:
+        q = q.replace(word, "")
 
-        output = ""
+    return q.strip()
 
-        for idx, result in enumerate(results, start=1):
-            output += f"{idx}. {result['title']}\n"
-            output += f"{result['body']}\n"
-            output += f"Link: {result['href']}\n\n"
 
-        sources = [
-            {
-                "source": result["title"],
-                "url": result["href"],
-                "preview": result["body"]
-            }
-            for result in results
-        ]
-
+def format_results(results):
+    if not results:
         return {
-            "text": output.strip(),
-            "sources": sources
+            "text": "No web results found. Please check your internet connection and try again.",
+            "sources": []
         }
+
+    output = ""
+
+    sources = []
+
+    for idx, result in enumerate(results, start=1):
+        title = result.get("title", "No title")
+        url = result.get("url") or result.get("href", "")
+        body = result.get("body", "")
+
+        output += f"{idx}. {title}\n"
+        output += f"{body}\n"
+        output += f"Link: {url}\n\n"
+
+        sources.append({
+            "source": title,
+            "url": url,
+            "preview": body
+        })
+
+    return {
+        "text": output.strip(),
+        "sources": sources
+    }
+
+
+def web_search(question: str, max_results: int = 5):
+    query = clean_search_query(question)
+
+    try:
+        with DDGS(timeout=20) as ddgs:
+
+            # NEWS SEARCH FIRST
+            if any(word in query for word in ["latest", "today", "news", "current"]):
+                news_results = list(
+                    ddgs.news(
+                        query,
+                        max_results=max_results
+                    )
+                )
+
+                if news_results:
+                    return format_results(news_results)
+
+            # NORMAL SEARCH FALLBACK
+            text_results = list(
+                ddgs.text(
+                    query,
+                    max_results=max_results
+                )
+            )
+
+            return format_results(text_results)
 
     except Exception as e:
         return {

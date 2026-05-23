@@ -29,9 +29,7 @@ def tool_agent(state):
         return state
 
     if any(word in q for word in ["search", "latest", "current", "today", "news", "web"]):
-        query = q.replace("search", "").replace("web", "").strip()
-
-        result = web_search(query)
+        result = web_search(question)
 
         state["tool_output"] = result["text"]
         state["final_answer"] = result["text"]
