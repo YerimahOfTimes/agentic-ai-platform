@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    container_name: agentic_backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/faiss_index:/app/faiss_index
+      - ./backend/data:/app/data
+      - ./backend/database:/app/database
+      - ./backend/app/memory_store.json:/app/app/memory_store.json
+
+  frontend:
+    build: ./frontend
+    container_name: agentic_frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend

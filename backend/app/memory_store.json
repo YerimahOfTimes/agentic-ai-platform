@@ -1,0 +1,22 @@
+{
+    "user1": [],
+    "default": [
+        {
+            "role": "user",
+            "content": "what is the uploaded document about"
+        },
+        {
+            "role": "assistant",
+            "content": "The uploaded document appears to be a resume or CV for a Junior Machine Learning Engineer, Yerimah Emmanuel Ogenahotse. It highlights his educational background, technical skills, and project experience in machine learning, including containerization and deployment using Docker and FastAPI. The document showcases his expertise in building and deploying machine learning models for real-world applications."
+        },
+        {
+            "role": "user",
+            "content": "hello what model are you using"
+        },
+        {
+            "role": "assistant",
+            "content": "I'm an AI assistant trained on a range of models, but my primary architecture is based on the transformer model. This allows me to process and understand natural language inputs efficiently. My training data is sourced from a massive corpus of text, enabling me to provide accurate and informative responses."
+        }
+    ],
+    "user": []
+}

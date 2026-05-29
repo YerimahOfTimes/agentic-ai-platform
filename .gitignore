@@ -1,27 +1,96 @@
-# Python
+# =========================
+# PYTHON
+# =========================
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
+*.so
+
+# =========================
+# VIRTUAL ENVIRONMENTS
+# =========================
 venv/
+.env/
+.venv/
+
+# =========================
+# ENV FILES
+# =========================
 .env
 
-# Streamlit
+# =========================
+# DATABASES
+# =========================
+*.db
+*.sqlite3
+
+# =========================
+# VECTOR DATABASES
+# =========================
+faiss_index/
+*.faiss
+*.pkl
+
+# =========================
+# DATA FILES
+# =========================
+data/
+uploads/
+
+# =========================
+# JUPYTER
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# STREAMLIT
+# =========================
 .streamlit/
 
-# Data and indexes
-backend/data/
-backend/faiss_index/
-backend/app/memory_store.json
-backend/database/*.db
-
-# Logs
+# =========================
+# LOGS
+# =========================
 *.log
 
-# OS
+# =========================
+# VS CODE
+# =========================
+.vscode/
+
+# =========================
+# OS FILES
+# =========================
 .DS_Store
 Thumbs.db
 
-# IDE
-.vscode/
-.idea/
+# =========================
+# DOCKER
+# =========================
+docker-compose.override.yml
+
+# =========================
+# TEST CACHE
+# =========================
+.pytest_cache/
+
+# =========================
+# BUILD FILES
+# =========================
+dist/
+build/
+*.egg-info/
+
+# =========================
+# MODEL FILES
+# =========================
+*.bin
+*.pt
+*.pth
+*.onnx
+
+# =========================
+# CACHE
+# =========================
+.cache/
+hf_cache/

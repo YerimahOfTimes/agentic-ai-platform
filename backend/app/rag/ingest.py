@@ -6,14 +6,9 @@ from pypdf import PdfReader
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
 
-
-from app.core.config import DATA_DIR, INDEX_DIR
-
-embedding_model = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
+from app.core.config import INDEX_DIR
+from app.rag.vectorstore import get_embedding_model
 
 
 def clear_existing_index():
@@ -22,7 +17,6 @@ def clear_existing_index():
 
 
 def extract_text_from_pdf(file_path):
-
     reader = PdfReader(file_path)
 
     text = ""
@@ -53,7 +47,11 @@ def ingest_pdf(file_path, filename):
 
     chunks = splitter.split_documents(documents)
 
-    if os.path.exists(INDEX_DIR):
+    embedding_model = get_embedding_model()
+
+    index_file = os.path.join(INDEX_DIR, "index.faiss")
+
+    if os.path.exists(index_file):
         vector_db = FAISS.load_local(
             INDEX_DIR,
             embedding_model,

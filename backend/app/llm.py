@@ -1,8 +1,12 @@
-from langchain_ollama import ChatOllama
-from app.core.config import MODEL_NAME
+from langchain_groq import ChatGroq
 
-llm = ChatOllama(
-    model=MODEL_NAME,
-    temperature=0.1,
-    num_predict=200
+from app.core.config import (
+    GROQ_API_KEY,
+    GROQ_MODEL
+)
+
+llm = ChatGroq(
+    groq_api_key=GROQ_API_KEY,
+    model=GROQ_MODEL,
+    temperature=0.1
 )

@@ -6,7 +6,7 @@ from app.graph.workflow import workflow
 from app.rag.ingest import ingest_pdf
 from app.memory import add_to_memory, clear_memory
 import shutil
-from app.core.config import MODEL_NAME
+from app.core.config import MODEL_PROVIDER, GROQ_MODEL
 
 app = FastAPI()
 
@@ -80,7 +80,8 @@ def clear_documents():
 def status():
     return {
         "status": "running",
-        "model": MODEL_NAME,
+        "model": GROQ_MODEL,
+        "provider": MODEL_PROVIDER,
         "features": {
             "calculator": True,
             "python_tool": True,
